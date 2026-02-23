@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        HOST = "abhay_capstone@localhost"
+        HOST = "abhay_capstone@host.docker.internal"
         BASE_DIR = "/home/abhay_capstone/CC_LAB-6"
     }
 
@@ -24,7 +24,7 @@ pipeline {
                 sh """
                 ssh \$HOST '
                     docker rm -f backend || true
-                    docker run -d --name backend --network app-network backend-app
+                    docker run -d --name backend backend-app
                 '
                 """
             }
@@ -46,7 +46,7 @@ pipeline {
                 sh """
                 ssh \$HOST '
                     docker rm -f nginx || true
-                    docker run -d --name nginx --network app-network -p 8081:80 nginx-app
+                    docker run -d -p 8081:80 --name nginx nginx-app
                 '
                 """
             }
