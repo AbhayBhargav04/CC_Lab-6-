@@ -1,9 +1,9 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:lts-alpine
 
 USER root
-RUN apt-get update && apt-get install -y \
-    make \
-    g++ \
-    curl
+
+RUN apk add --no-cache docker-cli \
+    && addgroup -S docker \
+    && adduser jenkins docker
 
 USER jenkins
